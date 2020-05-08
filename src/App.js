@@ -5,14 +5,32 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import Form from 'react-bootstrap/Form'
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
 
 import brandLogo from './images/Untitled.png'
 import albums from './images/albums.png'
-import rewind from './images/rewind.svg'
-import play from './images/play.svg'
-import ffwd from './images/ffwd.svg'
+import rewind from './images/REWIND.png'
+import play from './images/PLAY.png'
+import ffwd from './images/FFWD.png'
+import social from './images/social_button.png'
+
+function MyModal(props) {
+  return (
+    <Modal {...props} size="sm" aria-labelledby="example-modal-sizes-title-sm" centered>
+      <Modal.Header closeButton>
+        <Modal.Title id="example-modal-sizes-title-sm">Social Media</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>Wegen einer technischen Störung stehen unsere Social Media - Kanäle derzeit leider nicht zur Verfügung. Wir bitten um Entschuldigung.</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" size="sm" onClick={props.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+  )
+}
 
 function App() {
+  const [modalShow, setModalShow] = React.useState(false)
   return (
     <div className="App">
       <Navbar bg="light" variant="light">
@@ -47,19 +65,30 @@ function App() {
               <p style={{ margin: ' 0 0 14px 0 ' }}>Lalo Schifrin - My Life In Movies</p>
               <Form>
                 <Form.Group style={{ width: '50vw' }}>
-                  <Form.Control type="range" value="12" /> <Form.Label>0:42</Form.Label>
+                  <Form.Control type="range" value="12" readOnly />
                 </Form.Group>
               </Form>
-              <Container>
-                <img src={rewind} style={{ width: '50px', height: 'auto', margin: "0 20px 0 20px" }} alt="rewind"/>
-                <img src={play} style={{ width: '50px', height: 'auto', margin: "0 20px 0 20px" }} alt="play" />
-                <img src={ffwd} style={{ width: '50px', height: 'auto', margin: "0 20px 0 20px" }} alt="fastforward" />
+              <Container
+                style={{ backgroundColor: 'white', borderRadius: '5px', display: 'flex', alignItems: 'center' }}
+              >
+                <Form.Label style={{ margin: '0 0 0 20px' }}>0:42</Form.Label>
+                <img src={rewind} style={{ width: '50px', height: 'auto', margin: '0 20px 0 120px' }} alt="rewind" />
+                <img src={play} style={{ width: '50px', height: 'auto', margin: '0 20px 0 20px' }} alt="play" />
+                <img src={ffwd} style={{ width: '50px', height: 'auto', margin: '0 20px 0 20px' }} alt="fastforward" />
+                <img
+                  src={social}
+                  style={{ width: '50px', height: 'auto', margin: '0 20px 0 95px' }}
+                  alt="socialshare"
+                  onClick={() => setModalShow(true)}
+                />
               </Container>
             </Container>
           </Col>
           <Col></Col>
         </Row>
       </Container>
+
+      <MyModal show={modalShow} onHide={() => setModalShow(false)} />
 
       <Navbar bg="light" variant="light" fixed="bottom" style={{ textAlign: 'center', justifyContent: 'center' }}>
         <Navbar.Text style={{ display: 'inline-block' }}>
